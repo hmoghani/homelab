@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-pvc
+  namespace: monitoring  # Specify the namespace where Grafana is deployed
+spec:
+  storageClassName: longhorn  
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 30Gi

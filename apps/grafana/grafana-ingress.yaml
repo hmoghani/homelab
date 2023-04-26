@@ -1,0 +1,43 @@
+## Nginx Ingress
+## Follow https://devopscube.com/setup-ingress-kubernetes-nginx-controller/
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ui
+  namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  # Use the host you used in your kubernetes Ingress Configurations
+  - host: grafana.unifiedconsulting.net
+    http:
+      paths:
+      - backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts: 
+    - grafana.unifiedconsulting.net
+    secretName: grafana-secret
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: grafana-cert
+  namespace: monitoring
+spec:
+  secretName: grafana-secret
+  duration: 2160h # 90 days
+  renewBefore: 360h # 15 days
+  commonName: grafana.unifiedconsulting.net
+  dnsNames:
+  - grafana.unifiedconsulting.net
+  issuerRef:
+    name: letsencrypt-prod
+    kind: Issuer

@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: mikrotik
+  name: mikrotik
+spec:
+  selector:
+    app: mikrotik
+  type: ClusterIP
+  ports:
+    - name: winbox
+      protocol: TCP
+      port: 8291
+      targetPort: 8291
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80

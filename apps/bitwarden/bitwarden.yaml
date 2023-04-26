@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bitwarden
+  namespace: bitwarden
+spec:
+  selector:
+    matchLabels:
+      app: bitwarden
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bitwarden
+    spec:
+      volumes:
+        - name: bitwarden
+          persistentVolumeClaim:
+            claimName: bitwarden-pvc
+      containers:
+        - name: bitwarden
+          image: vaultwarden/server:1.28.1
+          ports:
+            - containerPort: 80
+          env:
+            - name: WEBSOCKET_ENABLED
+              value: "true"
+            - name: SIGNUPS_ALLOWED
+              value: "true"
+            - name: SMTP_HOST
+              value: smtp.gmail.com
+            - name: SMTP_FROM
+              value: bitwarden@unifiedconsulting.net
+            - name: SMTP_PORT
+              value: "587"
+            - name: SMTP_SECURITY
+              value: starttls
+            - name: SMTP_USERNAME
+              value: hmoghani
+            - name: SMTP_PASSWORD
+              value: haastaukslguwknq
+            - name: DOMAIN
+              value: https://bitwarden.unifiedconsulting.net
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - name: bitwarden
+              mountPath: /data
