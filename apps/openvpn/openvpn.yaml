@@ -46,7 +46,7 @@ spec:
             - name: RADIUS_SERVER
               value: "admin.unifiedconsulting.net"
             - name: RADIUS_SECRET
-              value: "*timeless*!"
+              value: "XXXXXXXX"
             - name: OVPN_DATA
               value: "/etc/openvpn" 
       volumes:
