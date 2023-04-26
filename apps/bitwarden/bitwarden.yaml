@@ -38,7 +38,7 @@ spec:
             - name: SMTP_USERNAME
               value: hmoghani
             - name: SMTP_PASSWORD
-              value: haastaukslguwknq
+              value: <PASSWORD>
             - name: DOMAIN
               value: https://bitwarden.unifiedconsulting.net
           resources:
