@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: openconnect
+  namespace: openconnect
+  labels:
+    app: openconnect
+spec:
+  type: ClusterIP
+  ports:
+    - name: 'udp-443'
+      protocol: UDP
+      port: 443
+      targetPort: 443
+    - name: 'tcp-443'
+      protocol: TCP
+      port: 443
+      targetPort: 443
+  selector:
+    name: openconnect

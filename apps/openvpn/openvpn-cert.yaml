@@ -1,0 +1,31 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-staging
+  namespace: openvpn
+spec:
+  acme:
+    email: hmoghani@gmail.com
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: openvpn-cert
+  namespace: openvpn
+spec:
+  secretName: openvpn-tls
+  duration: 2160h # 90 days
+  renewBefore: 360h # 15 days
+  commonName: openvpn.unifiedconsulting.net
+  dnsNames:
+  - openvpn.unifiedconsulting.net
+  issuerRef:
+    name: letsencrypt-staging
+    kind: Issuer
